@@ -23,7 +23,7 @@ const emit = defineEmits(['reconnect']);
 const { t } = useI18n();
 const { replaceInstallationName } = useBranding();
 
-const WHATSAPP_MANUAL_MIGRATION_GUIDE_URL = 'https://chwt.app/migrate-whatsapp';
+const WHATSAPP_MANUAL_MIGRATION_GUIDE_URL = '';
 
 const dialogRef = ref(null);
 const currentStep = ref(0);
@@ -356,6 +356,7 @@ defineExpose({ open, close });
             </div>
 
             <a
+              v-if="guideUrl"
               :href="guideUrl"
               target="_blank"
               rel="noopener noreferrer"

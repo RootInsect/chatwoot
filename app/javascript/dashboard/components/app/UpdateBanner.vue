@@ -73,8 +73,8 @@ export default {
     v-if="shouldShowBanner"
     color-scheme="primary"
     :banner-message="bannerMessage"
-    href-link="https://github.com/chatwoot/chatwoot/releases"
-    :href-link-text="$t('GENERAL_SETTINGS.LEARN_MORE')"
+    href-link=""
+    href-link-text=""
     has-close-button
     @close="dismissUpdateBanner"
   />
