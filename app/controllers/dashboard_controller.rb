@@ -15,6 +15,10 @@ class DashboardController < ActionController::Base
     DISPLAY_MANIFEST
     CREATE_NEW_ACCOUNT_FROM_DASHBOARD
     CHATWOOT_INBOX_TOKEN
+    CHATWOOT_SUPPORT_WEBSITE_TOKEN
+    CHATWOOT_SUPPORT_SCRIPT_URL
+    CHATWOOT_SUPPORT_IDENTIFIER_HASH
+    SUPPORT_CONTACT_URL
     API_CHANNEL_NAME
     API_CHANNEL_THUMBNAIL
     CLOUD_ANALYTICS_TOKEN
@@ -30,6 +34,7 @@ class DashboardController < ActionController::Base
   before_action :set_application_pack
   before_action :set_global_config
   before_action :set_dashboard_scripts
+  before_action :set_support_widget
   around_action :switch_locale
   before_action :ensure_installation_onboarding, only: [:index]
   before_action :render_hc_if_custom_domain, only: [:index]
@@ -45,11 +50,34 @@ class DashboardController < ActionController::Base
   end
 
   def set_global_config
-    @global_config = GlobalConfig.get(*GLOBAL_CONFIG_KEYS).merge(app_config)
+    @global_config = GlobalConfig.get(*GLOBAL_CONFIG_KEYS).merge(app_config).merge(support_widget_config)
+  end
+
+  def support_widget_config
+    config = ChatwootHub.support_config
+    {
+      SUPPORT_WEBSITE_TOKEN: config[:support_website_token],
+      SUPPORT_SCRIPT_URL: config[:support_script_url],
+      SUPPORT_IDENTIFIER_HASH: config[:support_identifier_hash],
+      SUPPORT_CONTACT_URL: config[:support_contact_url]
+    }
   end
 
   def set_dashboard_scripts
     @dashboard_scripts = sensitive_path? ? nil : GlobalConfig.get_value('DASHBOARD_SCRIPTS')
+  end
+
+  def set_support_widget
+    return if sensitive_path?
+
+    config = ChatwootHub.support_config
+    token = config[:support_website_token]
+    return if token.blank?
+
+    @support_widget = {
+      website_token: token,
+      script_url: (config[:support_script_url].presence || ENV.fetch('FRONTEND_URL', '')).to_s.chomp('/')
+    }
   end
 
   def ensure_installation_onboarding

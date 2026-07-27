@@ -42,6 +42,12 @@ voice_calls:
   enterprise: true
 
 # ------- Product Features ------- #
+support:
+  name: 'Contact Support'
+  description: 'Configure the support widget / link shown when users click Contact support (same-system inbox recommended).'
+  enabled: true
+  icon: 'icon-customer-service-2-line'
+  config_key: 'support'
 help_center:
   name: 'Help Center'
   description: 'Allow agents to create help center articles and publish them in a portal.'

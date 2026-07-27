@@ -25,6 +25,10 @@ const {
   DISABLE_USER_PROFILE_UPDATE: disableUserProfileUpdate,
   DEPLOYMENT_ENV: deploymentEnv,
   ACTIVE_PLATFORM_BANNERS: activePlatformBanners,
+  SUPPORT_WEBSITE_TOKEN: supportWebsiteToken,
+  SUPPORT_SCRIPT_URL: supportScriptUrl,
+  SUPPORT_IDENTIFIER_HASH: supportIdentifierHash,
+  SUPPORT_CONTACT_URL: supportContactUrl,
 } = window.globalConfig || {};
 
 const state = {
@@ -51,6 +55,10 @@ const state = {
   widgetBrandURL,
   isEnterprise: parseBoolean(isEnterprise),
   activePlatformBanners: activePlatformBanners || [],
+  supportWebsiteToken,
+  supportScriptUrl,
+  supportIdentifierHash,
+  supportContactUrl,
 };
 
 export const getters = {

@@ -4,9 +4,11 @@ import NextButton from 'dashboard/components-next/button/Button.vue';
 import { computed, onMounted } from 'vue';
 import { useAdmin } from 'dashboard/composables/useAdmin';
 import { useMapGetter } from 'dashboard/composables/store';
+import { useContactSupport } from 'dashboard/composables/useContactSupport';
 
 const { isAdmin } = useAdmin();
 const isOnChatwootCloud = useMapGetter('globalConfig/isOnChatwootCloud');
+const { canContactSupport, contactSupport } = useContactSupport();
 
 const showBillingLink = computed(
   () => isAdmin.value && isOnChatwootCloud.value
@@ -15,12 +17,6 @@ const showBillingLink = computed(
 const toggleSupportWidgetVisibility = () => {
   if (window.$chatwoot) {
     window.$chatwoot.toggleBubbleVisibility('show');
-  }
-};
-
-const toggleSupportWidget = () => {
-  if (window.$chatwoot) {
-    window.$chatwoot.toggle();
   }
 };
 
@@ -45,9 +41,10 @@ onMounted(() => {
     >
       <div class="flex flex-col items-center gap-3 mt-4">
         <NextButton
+          v-if="canContactSupport"
           icon="i-lucide-life-buoy"
           :label="$t('SIDEBAR_ITEMS.CONTACT_SUPPORT')"
-          @click="toggleSupportWidget"
+          @click="contactSupport"
         />
         <router-link
           v-if="showBillingLink"

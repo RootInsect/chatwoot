@@ -49,10 +49,16 @@ class ChatwootHub
   end
 
   def self.support_config
+    frontend_url = ENV.fetch('FRONTEND_URL', '').to_s.chomp('/')
+    script_url = InstallationConfig.find_by(name: 'CHATWOOT_SUPPORT_SCRIPT_URL')&.value
+    script_url = frontend_url if script_url.blank?
+
     {
-      support_website_token: InstallationConfig.find_by(name: 'CHATWOOT_SUPPORT_WEBSITE_TOKEN')&.value,
-      support_script_url: InstallationConfig.find_by(name: 'CHATWOOT_SUPPORT_SCRIPT_URL')&.value,
-      support_identifier_hash: InstallationConfig.find_by(name: 'CHATWOOT_SUPPORT_IDENTIFIER_HASH')&.value
+      support_website_token: InstallationConfig.find_by(name: 'CHATWOOT_SUPPORT_WEBSITE_TOKEN')&.value.presence ||
+        InstallationConfig.find_by(name: 'CHATWOOT_INBOX_TOKEN')&.value,
+      support_script_url: script_url,
+      support_identifier_hash: InstallationConfig.find_by(name: 'CHATWOOT_SUPPORT_IDENTIFIER_HASH')&.value,
+      support_contact_url: InstallationConfig.find_by(name: 'SUPPORT_CONTACT_URL')&.value
     }
   end
 

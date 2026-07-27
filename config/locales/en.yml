@@ -203,13 +203,14 @@ en:
     billing:
       invalid_currency: Invalid billing currency
       currency_locked: Billing currency cannot be changed after billing has been set up
+      self_serve_disabled: Self-serve billing is disabled. Please contact support to change your plan or credits.
     topup:
       credits_required: Credits amount is required
       invalid_credits: Invalid credits amount
       invalid_option: Invalid topup option
-      plan_not_eligible: Top-ups are only available for paid plans. Please upgrade your plan first.
+      plan_not_eligible: Top-ups are only available for paid plans. Please contact support to upgrade.
       stripe_customer_not_configured: Stripe customer not configured
-      no_payment_method: No payment methods found. Please add a payment method before making a purchase.
+      no_payment_method: No payment methods found. Please contact support.
     reports:
       date_range_too_long: Date range cannot exceed 6 months
   profile:

@@ -8,6 +8,7 @@ import { useConfig } from 'dashboard/composables/useConfig';
 import { differenceInDays } from 'date-fns';
 import { useAdmin } from 'dashboard/composables/useAdmin';
 import { useI18n } from 'vue-i18n';
+import { useContactSupport } from 'dashboard/composables/useContactSupport';
 
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
@@ -25,6 +26,7 @@ const { t } = useI18n();
 const { accountId, currentAccount } = useAccount();
 const { isEnterprise } = useConfig();
 const { isAdmin } = useAdmin();
+const { contactSupport } = useContactSupport();
 
 const isOnChatwootCloud = useMapGetter('globalConfig/isOnChatwootCloud');
 
@@ -96,6 +98,8 @@ const fetchLimits = () => {
 };
 
 const routeToBilling = () => {
+  if (contactSupport()) return;
+
   router.push({
     name: 'billing_settings_index',
     params: { accountId: accountId.value },
@@ -144,8 +148,8 @@ defineExpose({ shouldShowUpgradePage });
       </div>
       <NextButton
         v-if="isAdmin"
-        :label="$t('GENERAL_SETTINGS.OPEN_BILLING')"
-        icon="i-lucide-credit-card"
+        :label="$t('GENERAL_SETTINGS.CONTACT_SUPPORT')"
+        icon="i-lucide-life-buoy"
         @click="routeToBilling()"
       />
     </div>

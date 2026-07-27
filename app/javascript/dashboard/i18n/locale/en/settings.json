@@ -567,11 +567,11 @@
     }
   },
   "BILLING_SETTINGS": {
-    "TITLE": "Billing",
-    "DESCRIPTION": "Manage your subscription here, upgrade your plan and get more for your team.",
+    "TITLE": "Plan & access",
+    "DESCRIPTION": "View your current plan and contact support to request access or higher limits. Features are enabled by our team.",
     "CURRENT_PLAN": {
       "TITLE": "Current Plan",
-      "PLAN_NOTE": "You are currently subscribed to the **{plan}** plan with **{quantity}** licenses",
+      "PLAN_NOTE": "You are currently on the **{plan}** plan with **{quantity}** licenses",
       "SEAT_COUNT": "Number of seats",
       "RENEWS_ON": "Renews on",
       "CURRENCY": "Currency"
@@ -588,27 +588,27 @@
     },
     "VIEW_PRICING": "View Pricing",
     "MANAGE_SUBSCRIPTION": {
-      "TITLE": "Manage your subscription",
-      "DESCRIPTION": "View your previous invoices, edit your billing details, or cancel your subscription.",
-      "BUTTON_TXT": "Go to the billing portal"
+      "TITLE": "Need a plan change?",
+      "DESCRIPTION": "Self-serve billing is disabled. Contact support and we will update your plan or permissions in the admin console.",
+      "BUTTON_TXT": "Contact support"
     },
     "CAPTAIN": {
       "TITLE": "Captain",
-      "DESCRIPTION": "Manage usage and credits for Captain AI.",
-      "BUTTON_TXT": "Buy more credits",
+      "DESCRIPTION": "View Captain AI usage. Contact support if you need more credits.",
+      "BUTTON_TXT": "Request more credits",
       "DOCUMENTS": "Documents",
       "RESPONSES": "Credits",
-      "UPGRADE": "Captain is not available on the free plan, upgrade now to get access to assistants, copilot and more.",
+      "UPGRADE": "Captain is not enabled for this account. Contact support to request access.",
       "REFRESH_CREDITS": "Refresh"
     },
     "CHAT_WITH_US": {
       "TITLE": "Need help?",
-      "DESCRIPTION": "Do you face any issues in billing? We are here to help.",
-      "BUTTON_TXT": "Chat with us"
+      "DESCRIPTION": "Tell us which features or limits you need. Our team will enable them for your account.",
+      "BUTTON_TXT": "Contact support"
     },
-    "NO_BILLING_USER": "Your billing account is being configured. Please refresh the page and try again.",
+    "NO_BILLING_USER": "Contact support to set up your account plan.",
     "TOPUP": {
-      "BUY_CREDITS": "Buy more credits",
+      "BUY_CREDITS": "Request more credits",
       "MODAL_TITLE": "Buy AI Credits",
       "MODAL_DESCRIPTION": "Purchase additional credits for Captain AI.",
       "CREDITS": "CREDITS",

@@ -5,7 +5,6 @@ import { useMapGetter } from 'dashboard/composables/store';
 import { useI18n } from 'vue-i18n';
 import Avatar from 'next/avatar/Avatar.vue';
 import SidebarProfileMenuStatus from './SidebarProfileMenuStatus.vue';
-import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
 import {
   DropdownContainer,
@@ -14,6 +13,7 @@ import {
   DropdownItem,
 } from 'next/dropdown-menu/base';
 import CustomBrandPolicyWrapper from '../../components/CustomBrandPolicyWrapper.vue';
+import { useContactSupport } from 'dashboard/composables/useContactSupport';
 
 defineProps({
   isCollapsed: { type: Boolean, default: false },
@@ -26,35 +26,22 @@ defineOptions({
 });
 
 const { t } = useI18n();
+const { canContactSupport, contactSupport } = useContactSupport();
 
 const currentUser = useMapGetter('getCurrentUser');
 const currentUserAvailability = useMapGetter('getCurrentUserAvailability');
-const accountId = useMapGetter('getCurrentAccountId');
-const globalConfig = useMapGetter('globalConfig/get');
-const isFeatureEnabledonAccount = useMapGetter(
-  'accounts/isFeatureEnabledonAccount'
-);
 
-const showChatSupport = computed(() => {
-  return (
-    isFeatureEnabledonAccount.value(
-      accountId.value,
-      FEATURE_FLAGS.CONTACT_CHATWOOT_SUPPORT_TEAM
-    ) && globalConfig.value.chatwootInboxToken
-  );
-});
+const showChatSupport = computed(() => canContactSupport.value);
 
 const toggleChatSupport = () => {
-  if (window.$chatwoot) {
-    window.$chatwoot.toggle();
-  }
+  contactSupport();
 };
 
 const menuItems = computed(() => {
   return [
     {
       show: showChatSupport.value,
-      showOnCustomBrandedInstance: false,
+      showOnCustomBrandedInstance: true,
       label: t('SIDEBAR_ITEMS.CONTACT_SUPPORT'),
       icon: 'i-lucide-life-buoy',
       click: toggleChatSupport,
