@@ -1,0 +1,63 @@
+# Jingqi Chatwoot — 1Panel 兼容 compose
+# 目录示例：
+#   /opt/1panel/apps/chatwoot/chatwoot-prod
+#   /opt/1panel/apps/chatwoot/chatwoot-dev      # 或现网 chatwoot-staging
+#   /opt/1panel/apps/chatwoot/chatwoot-test
+# 通过 .env 指定 IMAGE / IMAGE_TAG / HOST_PORT
+
+services:
+  rails:
+    image: ${IMAGE:-jingqi/chatwoot}:${IMAGE_TAG:-latest}
+    env_file: .env
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - '127.0.0.1:${HOST_PORT:-3000}:3000'
+    volumes:
+      - storage_data:/app/storage
+    environment:
+      - NODE_ENV=production
+      - RAILS_ENV=production
+      - INSTALLATION_ENV=docker
+    entrypoint: docker/entrypoints/rails.sh
+    command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
+
+  sidekiq:
+    image: ${IMAGE:-jingqi/chatwoot}:${IMAGE_TAG:-latest}
+    env_file: .env
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - storage_data:/app/storage
+    environment:
+      - NODE_ENV=production
+      - RAILS_ENV=production
+      - INSTALLATION_ENV=docker
+    command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DATABASE:-chatwoot_production}
+      - POSTGRES_USER=${POSTGRES_USERNAME:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+
+  redis:
+    image: redis:alpine
+    restart: always
+    command: ['sh', '-c', 'redis-server --requirepass "$$REDIS_PASSWORD"']
+    env_file: .env
+    volumes:
+      - redis_data:/data
+
+volumes:
+  storage_data:
+  postgres_data:
+  redis_data:
