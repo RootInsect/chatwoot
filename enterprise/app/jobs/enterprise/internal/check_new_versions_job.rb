@@ -8,6 +8,8 @@ module Enterprise::Internal::CheckNewVersionsJob
   private
 
   def update_plan_info
+    # No Chatwoot Hub license sync for Jingqi self-hosted.
+    return unless ChatwootApp.chatwoot_hub_enabled?
     return if @instance_info.blank?
 
     update_installation_config(key: 'INSTALLATION_PRICING_PLAN', value: @instance_info['plan'])
@@ -24,6 +26,8 @@ module Enterprise::Internal::CheckNewVersionsJob
   end
 
   def reconcile_premium_config_and_features
+    return unless ChatwootApp.chatwoot_hub_enabled?
+
     Internal::ReconcilePlanConfigService.new.perform
   end
 end

@@ -22,11 +22,17 @@ module ChatwootApp
   end
 
   def self.self_hosted_enterprise?
-    enterprise? && !chatwoot_cloud? && GlobalConfig.get_value('INSTALLATION_PRICING_PLAN') == 'enterprise'
+    # Jingqi: self-hosted EE is local enterprise; do not depend on Hub license plan.
+    enterprise? && !chatwoot_cloud?
+  end
+
+  # Official Chatwoot Hub (license ping, push relay, billing portal). Off by default.
+  def self.chatwoot_hub_enabled?
+    ActiveModel::Type::Boolean.new.cast(ENV.fetch('CHATWOOT_HUB_ENABLED', false))
   end
 
   # Temporary feature unlock (intended for test). When true: enable all account
-  # feature flags only; installation plan / limits / Hub plan sync stay normal.
+  # feature flags only; installation plan / limits stay normal.
   # Community reconcile will not strip those flags while this is on.
   def self.unlock_all_features?
     ActiveModel::Type::Boolean.new.cast(ENV.fetch('CHATWOOT_UNLOCK_ALL_FEATURES', false))
