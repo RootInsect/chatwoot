@@ -9,6 +9,8 @@ module Enterprise::Internal::CheckNewVersionsJob
 
   def update_plan_info
     return if @instance_info.blank?
+    # Keep temporary unlock stable; do not let Hub overwrite plan back to community.
+    return if ChatwootApp.unlock_all_features?
 
     update_installation_config(key: 'INSTALLATION_PRICING_PLAN', value: @instance_info['plan'])
     update_installation_config(key: 'INSTALLATION_PRICING_PLAN_QUANTITY', value: @instance_info['plan_quantity'])

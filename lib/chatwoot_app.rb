@@ -25,6 +25,12 @@ module ChatwootApp
     enterprise? && !chatwoot_cloud? && GlobalConfig.get_value('INSTALLATION_PRICING_PLAN') == 'enterprise'
   end
 
+  # Temporary full unlock (intended for test). When true: all account feature
+  # flags on, installation plan treated as enterprise, hub reconcile skipped.
+  def self.unlock_all_features?
+    ActiveModel::Type::Boolean.new.cast(ENV.fetch('CHATWOOT_UNLOCK_ALL_FEATURES', false))
+  end
+
   def self.custom?
     @custom ||= root.join('custom').exist?
   end

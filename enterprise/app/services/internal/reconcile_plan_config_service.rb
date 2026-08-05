@@ -1,5 +1,7 @@
 class Internal::ReconcilePlanConfigService
   def perform
+    return if ChatwootApp.unlock_all_features?
+
     remove_premium_config_reset_warning
     return if ChatwootHub.pricing_plan != 'community'
 
