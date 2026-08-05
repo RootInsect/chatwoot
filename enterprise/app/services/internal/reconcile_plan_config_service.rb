@@ -1,14 +1,13 @@
 class Internal::ReconcilePlanConfigService
   def perform
-    return if ChatwootApp.unlock_all_features?
-
     remove_premium_config_reset_warning
     return if ChatwootHub.pricing_plan != 'community'
 
     create_premium_config_reset_warning if premium_config_reset_required?
 
     reconcile_premium_config
-    reconcile_premium_features
+    # Keep account feature flags when temporary unlock is on; do not strip premium flags.
+    reconcile_premium_features unless ChatwootApp.unlock_all_features?
   end
 
   private
