@@ -6,7 +6,8 @@ class Internal::ReconcilePlanConfigService
     create_premium_config_reset_warning if premium_config_reset_required?
 
     reconcile_premium_config
-    reconcile_premium_features
+    # Keep account feature flags when temporary unlock is on; do not strip premium flags.
+    reconcile_premium_features unless ChatwootApp.unlock_all_features?
   end
 
   private

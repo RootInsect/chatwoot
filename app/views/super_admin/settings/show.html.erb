@@ -9,11 +9,11 @@
     <h1 class="text-base font-medium leading-6 text-n-slate-12" id="page-title">
       <%= content_for(:title) %>
     </h1>
-    <p class="text-sm font-normal leading-5 text-slate-500 m-0">Update your instance settings, access billing portal</p>
+    <p class="text-sm font-normal leading-5 text-slate-500 m-0">Update your instance settings</p>
   </div>
 </header>
 <section class="main-content__body px-8">
-  <% if Redis::Alfred.get(Redis::Alfred::CHATWOOT_INSTALLATION_CONFIG_RESET_WARNING) %>
+  <% if ChatwootApp.chatwoot_hub_enabled? && Redis::Alfred.get(Redis::Alfred::CHATWOOT_INSTALLATION_CONFIG_RESET_WARNING) %>
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
     <strong class="font-bold">Alert!</strong>
     <span class="block sm:inline">Unauthorized premium changes detected in Chatwoot. To keep using them, please upgrade your plan.
@@ -39,7 +39,7 @@
         </button>
       </div>
     </div>
-    <% if ChatwootApp.enterprise? %>
+    <% if ChatwootApp.enterprise? && ChatwootApp.chatwoot_hub_enabled? %>
       <div class="flex p-4 outline outline-1 outline-n-container rounded-lg items-start md:items-center shadow-sm flex-col md:flex-row">
         <div class="flex flex-col flex-grow gap-1">
           <div class="flex items-center gap-2">
@@ -60,7 +60,7 @@
       </div>
     <% end %>
 
-    <% if ChatwootHub.pricing_plan != 'community' &&  User.count > ChatwootHub.pricing_plan_quantity %>
+    <% if ChatwootApp.chatwoot_hub_enabled? && ChatwootHub.pricing_plan != 'community' && User.count > ChatwootHub.pricing_plan_quantity %>
     <div role="alert">
       <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
         <p>You have <%= User.count %> agents. Please add more licenses to add more users.</p>
@@ -81,7 +81,7 @@
           <div class="visible <% if !attrs[:enabled] %> group-hover:invisible <% end %> flex items-center justify-center w-10 h-10 mb-2 border border-slate-100 border-solid text-slate-800 rounded-full">
             <svg width="20" height="20"><use xlink:href="#<%= attrs[:icon] %>" /></svg>
           </div>
-          <% if !attrs[:enabled] %>
+          <% if !attrs[:enabled] && ChatwootApp.chatwoot_hub_enabled? %>
           <div class="flex h-9 absolute top-5 items-center invisible group-hover:visible">
             <% if ChatwootApp.enterprise? %>
               <%= render 'upgrade_button_enterprise' %>

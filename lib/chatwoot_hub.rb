@@ -33,17 +33,22 @@ class ChatwootHub
   end
 
   def self.billing_url
+    return ENV.fetch('SUPPORT_CONTACT_URL', '#') unless ChatwootApp.chatwoot_hub_enabled?
+
     "#{billing_base_url}?installation_identifier=#{installation_identifier}"
   end
 
   def self.pricing_plan
     return 'community' unless ChatwootApp.enterprise?
+    # Self-hosted EE: local enterprise capabilities, not Chatwoot Hub licensing.
+    return 'enterprise' unless ChatwootApp.chatwoot_cloud?
 
     InstallationConfig.find_by(name: 'INSTALLATION_PRICING_PLAN')&.value || 'community'
   end
 
   def self.pricing_plan_quantity
     return 0 unless ChatwootApp.enterprise?
+    return ChatwootApp.max_limit unless ChatwootApp.chatwoot_cloud?
 
     InstallationConfig.find_by(name: 'INSTALLATION_PRICING_PLAN_QUANTITY')&.value || 0
   end
@@ -89,6 +94,8 @@ class ChatwootHub
   end
 
   def self.sync_with_hub
+    return {} unless ChatwootApp.chatwoot_hub_enabled?
+
     begin
       info = instance_config
       info = info.merge(instance_metrics) unless ENV['DISABLE_TELEMETRY']
@@ -103,6 +110,8 @@ class ChatwootHub
   end
 
   def self.register_instance(company_name, owner_name, owner_email)
+    return unless ChatwootApp.chatwoot_hub_enabled?
+
     info = { company_name: company_name, owner_name: owner_name, owner_email: owner_email, subscribed_to_mailers: true }
     RestClient.post(registration_url, info.merge(instance_config).to_json, { content_type: :json, accept: :json })
   rescue *ExceptionList::REST_CLIENT_EXCEPTIONS => e
@@ -112,6 +121,8 @@ class ChatwootHub
   end
 
   def self.send_push(fcm_options)
+    return unless ChatwootApp.chatwoot_hub_enabled?
+
     send_push_with_response(fcm_options)
   rescue *ExceptionList::REST_CLIENT_EXCEPTIONS => e
     Rails.logger.error "Exception: #{e.message}"
@@ -120,12 +131,15 @@ class ChatwootHub
   end
 
   def self.send_push_with_response(fcm_options)
+    raise 'Chatwoot Hub is disabled' unless ChatwootApp.chatwoot_hub_enabled?
+
     info = { fcm_options: fcm_options }
     RestClient.post(push_notification_url, info.merge(instance_config).to_json, { content_type: :json, accept: :json })
   end
 
   def self.emit_event(event_name, event_data)
     return if ENV['DISABLE_TELEMETRY']
+    return unless ChatwootApp.chatwoot_hub_enabled?
 
     info = { event_name: event_name, event_data: event_data }
     RestClient.post(events_url, info.merge(instance_config).to_json, { content_type: :json, accept: :json })
