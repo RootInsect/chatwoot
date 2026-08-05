@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Applies temporary full feature unlock when CHATWOOT_UNLOCK_ALL_FEATURES=true.
-# Safe to run on every boot (idempotent). Skip quietly if DB is not ready yet.
+# Enables all account feature flags when CHATWOOT_UNLOCK_ALL_FEATURES=true
+# (does not change plan/limits). Idempotent; skips quietly if DB is not ready.
 Rails.application.config.after_initialize do
   next unless ChatwootApp.unlock_all_features?
   next unless defined?(ActiveRecord::Base)
