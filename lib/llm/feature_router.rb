@@ -15,7 +15,7 @@ module Llm::FeatureRouter
 
       {
         feature: feature_key,
-        provider: Llm::Models.provider_for(model),
+        provider: Llm::Models.provider_for(model) || 'openai',
         model: model,
         source: source
       }
@@ -26,7 +26,7 @@ module Llm::FeatureRouter
     def account_model_override(account, feature_key)
       model = account&.captain_models&.[](feature_key).presence
       return unless model
-      return model if Llm::Models.valid_model_for?(feature_key, model)
+      return model if Llm::Models.valid_selectable_model?(feature_key, model)
     end
 
     def captain_v2_assistant_model(account, feature_key)

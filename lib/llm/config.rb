@@ -29,6 +29,20 @@ module Llm::Config
       yield context
     end
 
+    def chat(context = nil, model:)
+      args = chat_args_for(model)
+      return context.chat(**args) if context
+
+      RubyLLM.chat(**args)
+    end
+
+    def chat_args_for(model)
+      model_id = model.to_s
+      return { model: model_id } if Llm::Models.known_runtime_model?(model_id)
+
+      { model: model_id, provider: :openai, assume_model_exists: true }
+    end
+
     private
 
     def configure_ruby_llm

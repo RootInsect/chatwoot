@@ -60,9 +60,15 @@
               { selected: @app_config[key] },
               class: "mt-2 border border-slate-100 p-1 rounded-md"
             %>
-        <% else %>
-          <%= form.text_field "app_config[#{key}]", value: @app_config[key] %>
-        <% end %>
+          <% elsif key == 'CAPTAIN_OPEN_AI_MODEL' %>
+            <%= form.select "app_config[#{key}]",
+              Llm::Models.global_model_options,
+              { selected: @app_config[key], include_blank: true },
+              class: "mt-2 border border-slate-100 p-1 rounded-md"
+            %>
+          <% else %>
+            <%= form.text_field "app_config[#{key}]", value: @app_config[key] %>
+          <% end %>
           <% description = installation_config_description(key, config_meta) %>
           <% if description.present? %>
             <p class="pt-2 text-xs italic text-slate-400">

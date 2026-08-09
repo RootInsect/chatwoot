@@ -35,13 +35,15 @@ class CaptainModelOverridesField < Administrate::Field::Base
   end
 
   def model_options(feature_key)
-    Llm::Models.feature_config(feature_key)[:models].map do |model|
+    Llm::Models.selectable_models_for(feature_key).map do |model|
       [model[:display_name] || model[:id], model[:id]]
     end
   end
 
   def model_label(model_id)
-    Llm::Models.model_config(model_id)&.dig('display_name') || model_id
+    Llm::Models.model_config(model_id)&.dig('display_name') ||
+      Llm::Models.selectable_models_for('editor').find { |model| model[:id] == model_id }&.dig(:display_name) ||
+      model_id
   end
 
   def provider_label(provider_id)
