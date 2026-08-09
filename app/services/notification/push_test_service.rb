@@ -5,7 +5,7 @@ class Notification::PushTestService
   DEFAULT_BODY = 'This is a test from our team to check notification delivery on your device. No action needed.'.freeze
 
   def self.default_title
-    format(DEFAULT_TITLE, installation_name: GlobalConfigService.load('INSTALLATION_NAME', 'Chatwoot'))
+    format(DEFAULT_TITLE, installation_name: GlobalConfigService.load('INSTALLATION_NAME', 'AI客服'))
   end
 
   def self.default_body
@@ -86,7 +86,7 @@ class Notification::PushTestService
   end
 
   def chatwoot_hub_enabled?
-    ActiveModel::Type::Boolean.new.cast(ENV.fetch('ENABLE_PUSH_RELAY_SERVER', true))
+    ActiveModel::Type::Boolean.new.cast(ENV.fetch('ENABLE_PUSH_RELAY_SERVER', false))
   end
 
   def browser_push_payload(subscription)

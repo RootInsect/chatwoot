@@ -1,0 +1,8 @@
+# Force LF for scripts that run inside Linux containers (Windows checkout otherwise breaks Alpine shebangs).
+* text=auto eol=lf
+*.sh text eol=lf
+*.bash text eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+docker/entrypoints/** text eol=lf

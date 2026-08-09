@@ -12,36 +12,42 @@ saml:
 custom_branding:
   name: 'Custom Branding'
   description: 'Apply your own branding to this installation.'
-  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  enabled: <%= ChatwootApp.enterprise? %>
   icon: 'icon-paint-brush-line'
   config_key: 'custom_branding'
   enterprise: true
 agent_capacity:
   name: 'Agent Capacity'
   description: 'Set limits to auto-assigning conversations to your agents.'
-  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  enabled: <%= ChatwootApp.enterprise? %>
   icon: 'icon-hourglass-line'
   enterprise: true
 audit_logs:
   name: 'Audit Logs'
   description: 'Track and trace account activities with ease with detailed audit logs.'
-  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  enabled: <%= ChatwootApp.enterprise? %>
   icon: 'icon-menu-search-line'
   enterprise: true
 disable_branding:
   name: 'Disable Branding'
   description: 'Disable branding on live-chat widget and external emails.'
-  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  enabled: <%= ChatwootApp.enterprise? %>
   icon: 'icon-sailbot-fill'
   enterprise: true
 voice_calls:
   name: 'Voice Calls'
   description: 'Enable voice calling capabilities for your agents and customers.'
-  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  enabled: <%= ChatwootApp.enterprise? %>
   icon: 'icon-voice-line'
   enterprise: true
 
 # ------- Product Features ------- #
+support:
+  name: 'Contact Support'
+  description: 'Configure the support widget / link shown when users click Contact support (same-system inbox recommended).'
+  enabled: true
+  icon: 'icon-customer-service-2-line'
+  config_key: 'support'
 help_center:
   name: 'Help Center'
   description: 'Allow agents to create help center articles and publish them in a portal.'

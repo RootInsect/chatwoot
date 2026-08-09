@@ -7,6 +7,13 @@ class AccountStatusField < Administrate::Field::Select
     "/fields/select/#{page}"
   end
 
+  def selectable_options
+    [
+      [I18n.t('super_admin.account_statuses.active'), 'active'],
+      [I18n.t('super_admin.account_statuses.suspended'), 'suspended']
+    ]
+  end
+
   def suspension_category_options
     Account::SUSPENSION_CATEGORIES.map do |category|
       [I18n.t("super_admin.account_suspension.categories.#{category}"), category]

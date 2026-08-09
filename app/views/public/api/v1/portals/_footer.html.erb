@@ -1,5 +1,6 @@
 
 <footer class="pt-16 pb-8 flex flex-col items-center justify-center">
+  <% if @global_config['BRAND_URL'].present? %>
   <div class="mx-auto max-w-2xl text-center py-2">
     <div class="flex items-center gap-2">
 
@@ -16,4 +17,5 @@
         </p>
     </div>
   </div>
+  <% end %>
 </footer>

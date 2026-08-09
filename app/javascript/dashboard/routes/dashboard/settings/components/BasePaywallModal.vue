@@ -62,10 +62,10 @@ const { isAdmin } = useAdmin();
     </p>
     <template v-if="isOnChatwootCloud && isAdmin">
       <ButtonV4 blue solid md @click="emit('upgrade')">
-        {{ $t(`${featurePrefix}.PAYWALL.UPGRADE_NOW`) }}
+        {{ $t('GENERAL_SETTINGS.CONTACT_SUPPORT') }}
       </ButtonV4>
       <span class="mt-2 text-xs tracking-tight text-center text-n-slate-11">
-        {{ $t(`${featurePrefix}.PAYWALL.CANCEL_ANYTIME`) }}
+        {{ $t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.DESCRIPTION') }}
       </span>
     </template>
     <template v-else-if="!isOnChatwootCloud && isSuperAdmin">

@@ -50,7 +50,14 @@ class SuperAdmin::AppConfigsController < SuperAdmin::ApplicationController
       'whatsapp_embedded' => %w[WHATSAPP_APP_ID WHATSAPP_APP_SECRET WHATSAPP_CONFIGURATION_ID WHATSAPP_API_VERSION],
       'notion' => %w[NOTION_CLIENT_ID NOTION_CLIENT_SECRET],
       'google' => %w[GOOGLE_OAUTH_CLIENT_ID GOOGLE_OAUTH_CLIENT_SECRET GOOGLE_OAUTH_REDIRECT_URI ENABLE_GOOGLE_OAUTH_LOGIN],
-      'captain' => %w[CAPTAIN_OPEN_AI_API_KEY CAPTAIN_OPEN_AI_MODEL CAPTAIN_OPEN_AI_ENDPOINT]
+      'captain' => %w[CAPTAIN_OPEN_AI_API_KEY CAPTAIN_OPEN_AI_MODEL CAPTAIN_OPEN_AI_ENDPOINT],
+      'support' => %w[
+        CHATWOOT_SUPPORT_WEBSITE_TOKEN
+        CHATWOOT_SUPPORT_SCRIPT_URL
+        CHATWOOT_SUPPORT_IDENTIFIER_HASH
+        SUPPORT_CONTACT_URL
+        CHATWOOT_INBOX_TOKEN
+      ]
     }
 
     @allowed_configs = mapping.fetch(
@@ -60,10 +67,14 @@ class SuperAdmin::AppConfigsController < SuperAdmin::ApplicationController
   end
 
   def success_notice
-    message = "#{@config.titleize} settings updated successfully"
+    section_name = I18n.t(
+      "super_admin.settings.features.#{@config}",
+      default: [I18n.t("super_admin.features.#{@config}.name", default: @config.to_s.titleize)]
+    )
+    message = I18n.t('super_admin.app_configs.update_success', name: section_name)
     return message unless restart_required_config_saved?
 
-    "#{message.delete_suffix('.')}. Restart Chatwoot web and worker processes to apply this change everywhere."
+    I18n.t('super_admin.app_configs.update_success_restart', name: section_name)
   end
 
   def success_flash

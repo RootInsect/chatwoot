@@ -701,6 +701,7 @@ Rails.application.routes.draw do
     namespace :super_admin do
       root to: 'dashboard#index'
 
+      get 'locale', to: 'locales#update', as: :locale
       resource :app_config, only: [:show, :create]
       resource :push_diagnostics, only: [:show, :create] do
         post :destroy_subscriptions, on: :collection

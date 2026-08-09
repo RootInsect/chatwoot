@@ -6,6 +6,10 @@ import yaml from '@rollup/plugin-yaml';
 
 export default defineConfig({
   plugins: [ruby(), vue(vueOptions), yaml()],
+  // Docker compose service name "vite" is used as Host when Rails proxies /vite-dev
+  server: {
+    allowedHosts: ['vite', 'localhost', '.localhost'],
+  },
   css: {
     preprocessorOptions: {
       scss: {

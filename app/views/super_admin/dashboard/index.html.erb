@@ -1,5 +1,5 @@
 <% content_for(:title) do %>
-  Admin Dashboard
+  <%= t('super_admin.dashboard.title') %>
 <% end %>
 
 <%= render_vue_component('DashboardIndex', {
@@ -7,5 +7,13 @@
   usersCount: @users_count,
   inboxesCount: @inboxes_count,
   conversationsCount: @conversations_count,
-  chartData: @data
+  chartData: @data,
+  labels: {
+    title: t('super_admin.dashboard.title'),
+    accounts: t('super_admin.dashboard.accounts'),
+    users: t('super_admin.dashboard.users'),
+    inboxes: t('super_admin.dashboard.inboxes'),
+    conversations: t('super_admin.dashboard.conversations'),
+    chartLabel: t('super_admin.dashboard.conversations')
+  }
 }) %>

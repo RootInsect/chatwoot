@@ -1,17 +1,22 @@
-# All Administrate controllers inherit from this
-# `Administrate::ApplicationController`, making it the ideal place to put
-# authentication logic or other before_actions.
-#
-# If you want to add pagination or other controller-level concerns,
-# you're free to overwrite the RESTful controller actions.
 class SuperAdmin::ApplicationController < Administrate::ApplicationController
   include ActionView::Helpers::TagHelper
   include ActionView::Context
   include SuperAdmin::NavigationHelper
+  include SuperAdmin::LocaleSwitchable
 
-  helper_method :render_vue_component, :settings_open?, :settings_pages
+  helper SuperAdmin::ApplicationHelper
+  helper_method :render_vue_component, :settings_open?, :settings_pages, :application_title, :installation_name
   # authenticiation done via devise : SuperAdmin Model
   before_action :authenticate_super_admin!
+
+  # Override Administrate's Rails.module_parent_name.titlecase ("Chatwoot")
+  def application_title
+    GlobalConfigService.load('INSTALLATION_NAME', 'AI客服')
+  end
+
+  def installation_name
+    application_title
+  end
 
   # Override this value to specify the number of elements to display at a time
   # on index pages. Defaults to 20.

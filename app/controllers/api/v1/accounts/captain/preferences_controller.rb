@@ -19,7 +19,7 @@ class Api::V1::Accounts::Captain::PreferencesController < Api::V1::Accounts::Bas
   def preferences_payload
     {
       providers: Llm::Models.providers,
-      models: Llm::Models.models,
+      models: Llm::Models.models_for_ui,
       features: features_with_account_preferences
     }
   end
@@ -62,7 +62,7 @@ class Api::V1::Accounts::Captain::PreferencesController < Api::V1::Accounts::Bas
     account_features = preferences[:features] || {}
 
     Llm::Models.feature_keys.index_with do |feature_key|
-      config = Llm::Models.feature_config(feature_key)
+      config = Llm::Models.feature_config_for_ui(feature_key)
       route = Llm::FeatureRouter.resolve(feature: feature_key, account: Current.account)
       config.merge(
         default: default_model_for(feature_key),

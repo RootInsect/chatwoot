@@ -1,8 +1,7 @@
 <section class="main-content__body">
  <hr/>
   <div class="form-actions">
-  <p class="text-color-red">Caution: Any actions executed after impersonate will appear as if performed by the impersonated user - [<%= page.resource.name %> ]</p>
-    <a class='button' target='_blank' href='<%= page.resource.generate_sso_link_with_impersonation %>'>Impersonate user </a>
+  <p class="text-color-red"><%= t('super_admin.users.impersonate.caution', name: page.resource.name) %></p>
+    <a class='button' target='_blank' href='<%= page.resource.generate_sso_link_with_impersonation %>'><%= t('super_admin.users.impersonate.submit') %></a>
   </div>
 </section>
-

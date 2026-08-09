@@ -52,9 +52,9 @@ module CaptainFeaturable
         next
       end
 
-      next if Llm::Models.valid_model_for?(feature_key, model_name)
+      next if Llm::Models.valid_selectable_model?(feature_key, model_name)
 
-      allowed_models = Llm::Models.models_for(feature_key)
+      allowed_models = Llm::Models.selectable_models_for(feature_key).map { |model| model[:id] }
       errors.add(:captain_models, "'#{model_name}' is not a valid model for #{feature_key}. Allowed: #{allowed_models.join(', ')}")
     end
   end

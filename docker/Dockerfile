@@ -147,6 +147,11 @@ COPY --from=pre-builder /app /app
 # Copy .git_sha file from pre-builder stage
 COPY --from=pre-builder /app/.git_sha /app/.git_sha
 
+# Strip CRLF so Windows build contexts still boot on Alpine
+RUN find /app/docker/entrypoints -type f \( -name '*.sh' -o -name '*.rb' \) -print0 \
+  | xargs -0 sed -i 's/\r$//' \
+  && find /app/docker/entrypoints -name '*.sh' -exec chmod +x {} \;
+
 WORKDIR /app
 
 EXPOSE 3000

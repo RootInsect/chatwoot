@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
   <head>
-    <title>SuperAdmin | Chatwoot</title>
+    <title><%= t('super_admin.sessions.title') %> | AI客服</title>
+    <style>
+      .sa-login-logo { height: 32px !important; width: auto !important; max-height: 32px; display: block; margin-left: auto; margin-right: auto; }
+    </style>
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'superadmin' %>
   </head>
@@ -9,11 +12,14 @@
     <div class="h-full w-full antialiased">
       <main class="flex flex-col bg-woot-25 min-h-screen w-full py-20 sm:px-6 lg:px-8 dark:bg-slate-900">
         <section class="max-w-5xl mx-auto">
-          <img src="/brand-assets/logo.svg" alt="Chatwoot" class="mx-auto h-8 w-auto block dark:hidden">
-          <img src="/brand-assets/logo_dark.svg" alt="Chatwoot" class="mx-auto h-8 w-auto hidden dark:block">
+          <img src="/brand-assets/logo.svg" alt="AI客服" width="120" height="32" class="sa-login-logo mx-auto h-8 w-auto block dark:hidden">
+          <img src="/brand-assets/logo_dark.svg" alt="AI客服" width="120" height="32" class="sa-login-logo mx-auto h-8 w-auto hidden dark:block">
           <h2 class="mt-6 text-center text-3xl font-medium text-slate-900 dark:text-woot-50">
-            Howdy, admin 👋
+            <%= t('super_admin.sessions.greeting') %>
           </h2>
+          <div class="mt-4">
+            <%= render 'super_admin/application/language_switcher', compact: true %>
+          </div>
         </section>
         <section class="bg-white shadow sm:mx-auto mt-11 sm:w-full sm:max-w-lg dark:bg-slate-800 p-11 sm:shadow-lg sm:rounded-lg mb-8 mt-15">
           <div>
@@ -23,22 +29,22 @@
               <% end %>
               <div class="mb-5">
                 <label for="email_address" class="flex justify-between text-sm font-medium leading-6 text-slate-900 dark:text-white">
-                Email Address
+                <%= t('super_admin.sessions.email') %>
                 </label>
                 <div class="mt-1">
-                  <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email eg: someone@example.com", class: "block w-full rounded-md border-0 px-3 py-3 appearance-none shadow-sm ring-1 ring-inset text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-woot-500 sm:text-sm sm:leading-6 outline-none dark:bg-slate-700 dark:ring-slate-600 dark:focus:ring-woot-500 ring-slate-200" %>
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: t('super_admin.sessions.email_placeholder'), class: "block w-full rounded-md border-0 px-3 py-3 appearance-none shadow-sm ring-1 ring-inset text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-woot-500 sm:text-sm sm:leading-6 outline-none dark:bg-slate-700 dark:ring-slate-600 dark:focus:ring-woot-500 ring-slate-200" %>
                 </div>
               </div>
               <div class="mb-5">
                 <label for="password" class="flex justify-between text-sm font-medium leading-6 text-slate-900 dark:text-white">
-                  Password
+                  <%= t('super_admin.sessions.password') %>
                 </label>
                 <div class="mt-1">
-                  <%= f.password_field :password, autocomplete: "current-password",  placeholder: "Password", class: "block w-full rounded-md border-0 px-3 py-3 appearance-none shadow-sm ring-1 ring-inset text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-woot-500 sm:text-sm sm:leading-6 outline-none dark:bg-slate-700 dark:ring-slate-600 dark:focus:ring-woot-500 ring-slate-200" %>
+                  <%= f.password_field :password, autocomplete: "current-password",  placeholder: t('super_admin.sessions.password'), class: "block w-full rounded-md border-0 px-3 py-3 appearance-none shadow-sm ring-1 ring-inset text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-woot-500 sm:text-sm sm:leading-6 outline-none dark:bg-slate-700 dark:ring-slate-600 dark:focus:ring-woot-500 ring-slate-200" %>
                 </div>
               </div>
               <button type="submit" class="flex items-center w-full justify-center rounded-md bg-woot-500 py-3 px-3 text-base font-medium text-white shadow-sm hover:bg-woot-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-woot-500 cursor-pointer">
-                <span>Login</span>
+                <span><%= t('super_admin.sessions.login') %></span>
               </button>
             <% end %>
           </div>
