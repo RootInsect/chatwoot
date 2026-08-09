@@ -19,39 +19,3 @@ by providing a `content_for(:javascript)` block.
     $.ajaxSetup({ async: false });
   <% end %>
 <% end %>
-
-<script>
-window.chatwootSettings = {
-  hideMessageBubble: true,
-};
-
-<% support = ChatwootHub.support_config %>
-<% if support[:support_website_token].present? %>
-(function(d,t) {
-  var BASE_URL = '<%= j(support[:support_script_url].presence || ENV.fetch('FRONTEND_URL', '').to_s.chomp('/')) %>';
-  var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-  g.src= BASE_URL.replace(/\/$/, '') + "/packs/js/sdk.js";
-  g.async = true;
-  s.parentNode.insertBefore(g,s);
-  g.onload=function(){
-    window.chatwootSDK.run({
-      websiteToken: '<%= j(support[:support_website_token]) %>',
-      baseUrl: BASE_URL
-    })
-  }
-})(document,"script");
-
-window.addEventListener('chatwoot:ready', function() {
-  <% if SuperAdmin.first.present? %>
-  window.$chatwoot.setUser('<%= j(ChatwootHub.installation_identifier) %>', {
-    <% if support[:support_identifier_hash].present? %>
-    identifier_hash: '<%= j(support[:support_identifier_hash]) %>',
-    <% end %>
-    email: '<%= j(SuperAdmin.first.email) %>',
-    name: '<%= j(SuperAdmin.first.name.to_s) %>'
-  });
-  <% end %>
-})
-<% end %>
-
-</script>

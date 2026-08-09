@@ -1,6 +1,6 @@
 # ------- Branding Related Config ------- #
 - name: INSTALLATION_NAME
-  value: 'Jingqi'
+  value: 'AI客服'
 - name: LOGO_THUMBNAIL
   value: '/brand-assets/logo_thumbnail.svg'
 - name: LOGO
@@ -12,7 +12,7 @@
 - name: WIDGET_BRAND_URL
   value: ''
 - name: BRAND_NAME
-  value: ''
+  value: 'AI客服'
 - name: TERMS_URL
   value: ''
 - name: PRIVACY_URL

@@ -8,21 +8,31 @@ const props = defineProps({
   },
 });
 
+const labels = computed(() => ({
+  title: 'Admin Dashboard',
+  accounts: 'Accounts',
+  users: 'Users',
+  inboxes: 'Inboxes',
+  conversations: 'Conversations',
+  chartLabel: 'Conversations',
+  ...(props.componentData.labels || {}),
+}));
+
 const prepareData = sourceData => {
-  var labels = [];
+  var chartLabels = [];
   var data = [];
   sourceData.forEach(item => {
-    labels.push(item[0]);
+    chartLabels.push(item[0]);
     data.push(item[1]);
   });
   return {
-    labels,
+    labels: chartLabels,
     datasets: [
       {
         type: 'bar',
         backgroundColor: 'rgb(31, 147, 255)',
         yAxisID: 'y',
-        label: 'Conversations',
+        label: labels.value.chartLabel,
         data: data,
       },
     ],
@@ -41,7 +51,7 @@ const { accountsCount, usersCount, inboxesCount, conversationsCount } =
   <div class="w-full h-full">
     <header class="main-content__header" role="banner">
       <h1 id="page-title" class="main-content__page-title">
-        {{ 'Admin Dashboard' }}
+        {{ labels.title }}
       </h1>
     </header>
 
@@ -49,19 +59,19 @@ const { accountsCount, usersCount, inboxesCount, conversationsCount } =
       <div class="report--list">
         <div class="report-card">
           <div class="metric">{{ accountsCount }}</div>
-          <div>{{ 'Accounts' }}</div>
+          <div>{{ labels.accounts }}</div>
         </div>
         <div class="report-card">
           <div class="metric">{{ usersCount }}</div>
-          <div>{{ 'Users' }}</div>
+          <div>{{ labels.users }}</div>
         </div>
         <div class="report-card">
           <div class="metric">{{ inboxesCount }}</div>
-          <div>{{ 'Inboxes' }}</div>
+          <div>{{ labels.inboxes }}</div>
         </div>
         <div class="report-card">
           <div class="metric">{{ conversationsCount }}</div>
-          <div>{{ 'Conversations' }}</div>
+          <div>{{ labels.conversations }}</div>
         </div>
       </div>
     </section>

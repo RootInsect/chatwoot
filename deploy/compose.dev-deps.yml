@@ -1,0 +1,43 @@
+# Chatwoot 本地开发依赖（仅 Postgres + Redis）
+# 应用进程在宿主机跑：pnpm dev / overmind（热更新，不打生产镜像）
+#
+#   docker compose -f deploy/compose.dev-deps.yml up -d
+#   或：./deploy/dev-up.sh  /  .\deploy\dev-up.ps1
+
+name: chatwoot-dev-deps
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    ports:
+      # 避开本机已有 Postgres/Redis；与 development.env.example 一致
+      - '127.0.0.1:55432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: chatwoot_development
+    volumes:
+      - chatwoot_dev_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:56379:6379'
+    volumes:
+      - chatwoot_dev_redis:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  chatwoot_dev_pg:
+  chatwoot_dev_redis:

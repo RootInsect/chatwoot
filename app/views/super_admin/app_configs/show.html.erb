@@ -1,5 +1,5 @@
 <% content_for(:title) do %>
-  Configure Settings - <%= @config.titleize %>
+  <%= t('super_admin.app_configs.configure_title', name: app_config_section_name(@config)) %>
 <% end %>
 
 <header class="main-content__header" role="banner">
@@ -17,25 +17,26 @@
 <section class="main-content__body">
   <%= form_with url: super_admin_app_config_url(config: @config) , method: :post do |form| %>
     <% @allowed_configs.each do |key| %>
+      <% config_meta = @installation_configs[key] || {} %>
       <div class="flex mb-8">
         <div class="field-unit__label">
-          <%= form.label "app_config[#{key}]", @installation_configs[key]&.dig('display_title') || key %>
+          <%= form.label "app_config[#{key}]", installation_config_title(key, config_meta) %>
         </div>
         <div class="-mt-2 field-unit__field ">
-          <% if @installation_configs[key]&.dig('type') == 'boolean' %>
+          <% if config_meta['type'] == 'boolean' %>
             <%= form.select "app_config[#{key}]",
-              [["True", true], ["False", false]],
+              [[t('super_admin.app_configs.boolean.true'), true], [t('super_admin.app_configs.boolean.false'), false]],
               { selected: ActiveModel::Type::Boolean.new.cast(@app_config[key]) },
               class: "mt-2 border border-slate-100 p-1 rounded-md"
             %>
-          <% elsif @installation_configs[key]&.dig('type') == 'code' %>
+          <% elsif config_meta['type'] == 'code' %>
             <%= form.text_area "app_config[#{key}]",
                 value: @app_config[key],
                 rows: 12,
                 wrap: 'off',
                 class: "mt-2 border font-mono text-xs border-slate-100 p-1 rounded-md overflow-scroll"
             %>
-          <% elsif @installation_configs[key]&.dig('type') == 'secret' %>
+          <% elsif config_meta['type'] == 'secret' %>
             <div class="relative">
               <%= form.password_field "app_config[#{key}]",
                   id: "app_config_#{key}",
@@ -49,29 +50,30 @@
               >
                 <svg class="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 5C5.63636 5 2 12 2 12C2 12 5.63636 19 12 19C18.3636 19 22 12 22 12C22 12 18.3636 5 12 5Z"/>
-                  <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"/>
+                  <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"/>
                 </svg>
               </button>
             </div>
-          <% elsif @installation_configs[key]&.dig('type') == 'select' && @installation_configs[key]&.dig('options').present? %>
+          <% elsif config_meta['type'] == 'select' && config_meta['options'].present? %>
             <%= form.select "app_config[#{key}]",
-              @installation_configs[key]['options'].map { |val, label| [label, val] },
+              config_meta['options'].map { |val, label| [label, val] },
               { selected: @app_config[key] },
               class: "mt-2 border border-slate-100 p-1 rounded-md"
             %>
         <% else %>
           <%= form.text_field "app_config[#{key}]", value: @app_config[key] %>
         <% end %>
-          <%if @installation_configs[key]&.dig('description').present? %>
+          <% description = installation_config_description(key, config_meta) %>
+          <% if description.present? %>
             <p class="pt-2 text-xs italic text-slate-400">
-              <%= @installation_configs[key]&.dig('description') %>
+              <%= description %>
             </p>
           <% end %>
         </div>
       </div>
     <% end %>
     <div class="form-actions">
-      <%= form.submit "Submit" %>
+      <%= form.submit t('super_admin.app_configs.submit') %>
     </div>
   <% end %>
 </section>

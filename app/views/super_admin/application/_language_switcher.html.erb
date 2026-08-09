@@ -1,0 +1,17 @@
+<%#
+  Language switcher for Super Admin (en / zh_CN only).
+  locals:
+    - compact: Boolean — tighter styling for login page (optional)
+%>
+<% compact = local_assigns.fetch(:compact, false) %>
+<% container_class = compact ? 'flex items-center justify-center gap-2 text-sm' : 'px-4 py-3 border-t border-slate-100' %>
+<%= tag.div class: container_class, role: 'navigation', aria: { label: t('super_admin.language.label', default: 'Language') } do %>
+  <div class="flex items-center gap-1">
+    <% [['zh_CN', '中文'], ['en', 'English']].each do |locale_code, label| %>
+      <% active = super_admin_locale.to_s == locale_code %>
+      <%= link_to label,
+                  super_admin_locale_path(locale: locale_code),
+                  class: (active ? 'px-2 py-1 rounded text-xs font-medium bg-woot-500 text-white' : 'px-2 py-1 rounded text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-woot-500') %>
+    <% end %>
+  </div>
+<% end %>

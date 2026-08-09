@@ -1,17 +1,3 @@
-<%#
-# Application Layout
-
-This view template is used as the layout
-for every page that Administrate generates.
-
-By default, it renders:
-- Navigation
-- Content for a search bar
-  (if provided by a `content_for` block in a nested page)
-- Flashes
-- Links to stylesheets and JavaScripts
-%>
-
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>" class="w-full h-full">
 <head>
@@ -21,6 +7,17 @@ By default, it renders:
   <title>
     <%= content_for(:title) %> - <%= application_title %>
   </title>
+  <%# Critical CSS: Vite Tailwind arrives async; without this the 455×392 logo FOUCs huge and icons flash. %>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    .sa-critical-layout { display: flex; width: 100%; height: 100%; }
+    .sa-critical-nav { width: 14rem; flex-shrink: 0; overflow: auto; border-right: 1px solid #e2e8f0; }
+    .sa-critical-logo { width: 40px !important; height: 40px !important; max-width: 40px; max-height: 40px; display: block; object-fit: contain; }
+    .sa-critical-nav svg:not(.sa-icon-sprite) { width: 16px; height: 16px; flex-shrink: 0; }
+    .sa-icon-sprite { position: absolute !important; width: 0 !important; height: 0 !important; overflow: hidden !important; visibility: hidden !important; }
+    .sa-critical-main { flex: 1; overflow: auto; min-width: 0; }
+    .search__eyeglass-icon, .search__clear-icon { width: 16px; height: 16px; }
+  </style>
   <%= render "stylesheet" %>
   <%= vite_client_tag %>
   <%= vite_javascript_tag 'superadmin' %>
@@ -28,9 +25,9 @@ By default, it renders:
 </head>
 <body class="antialiased w-full h-full">
   <%= render "icons" %>
-  <div class="flex w-full h-full">
+  <div class="flex w-full h-full sa-critical-layout">
     <%= render "navigation" -%>
-    <main class="w-full overflow-auto" role="main">
+    <main class="w-full overflow-auto sa-critical-main" role="main">
       <%= render "flashes" -%>
       <%= yield %>
     </main>

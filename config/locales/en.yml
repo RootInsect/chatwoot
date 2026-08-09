@@ -610,6 +610,394 @@ en:
     ssl_status:
       custom_domain_not_configured: 'Custom domain is not configured'
   super_admin:
+    language:
+      label: 'Language'
+      en: 'English'
+      zh_CN: '中文'
+    nav:
+      console: 'Super Admin Console'
+      dashboard: 'Dashboard'
+      settings: 'Settings'
+      sidekiq: 'Sidekiq Dashboard'
+      instance_health: 'Instance Health'
+      push_diagnostics: 'Push Diagnostics'
+      agent_dashboard: 'Agent Dashboard'
+      logout: 'Logout'
+    sessions:
+      title: 'SuperAdmin'
+      greeting: 'Howdy, admin 👋'
+      email: 'Email Address'
+      email_placeholder: 'Email eg: someone@example.com'
+      password: 'Password'
+      login: 'Login'
+      invalid_credentials: 'Invalid credentials. Please try again.'
+    dashboard:
+      title: 'Admin Dashboard'
+      accounts: 'Accounts'
+      users: 'Users'
+      inboxes: 'Inboxes'
+      conversations: 'Conversations'
+    settings:
+      title: 'Settings'
+      subtitle: 'Update your instance settings'
+      installation_identifier: 'Installation Identifier'
+      features_heading: 'Features'
+      current_plan: 'Current plan'
+      refresh: 'Refresh'
+      manage: 'Manage'
+      premium_alert_title: 'Alert!'
+      premium_alert_body: 'Unauthorized premium changes detected. To keep using them, please upgrade your plan.'
+      license_exceeded: 'You have %{count} agents. Please add more licenses to add more users.'
+      upgrade_now: 'Upgrade now'
+      switch_enterprise: 'Switch to Enterprise edition'
+      general: 'General'
+      features:
+        general: 'General'
+        support: 'Contact Support'
+        captain: 'Captain'
+        email: 'Email'
+        facebook: 'Messenger'
+        instagram: 'Instagram'
+        tiktok: 'TikTok'
+        google: 'Google'
+        microsoft: 'Microsoft'
+        linear: 'Linear'
+        notion: 'Notion'
+        slack: 'Slack'
+        whatsapp_embedded: 'WhatsApp Embedded'
+        shopify: 'Shopify'
+        saml: 'SAML SSO'
+        custom_branding: 'Custom Branding'
+        internal: 'Internal'
+    app_configs:
+      configure_title: 'Configure Settings - %{name}'
+      submit: 'Submit'
+      update_success: '%{name} settings updated successfully'
+      update_success_restart: '%{name} settings updated successfully. Restart web and worker processes to apply this change everywhere.'
+      boolean:
+        true: 'True'
+        false: 'False'
+    installation_configs:
+      ENABLE_ACCOUNT_SIGNUP:
+        title: 'Enable Account Signup'
+        description: 'Allow users to signup for new accounts'
+      FIREBASE_PROJECT_ID:
+        title: 'Firebase Project ID'
+        description: 'Firebase project ID'
+      FIREBASE_CREDENTIALS:
+        title: 'Firebase Credentials'
+        description: 'Contents of your Firebase credentials JSON file'
+      WEBHOOK_TIMEOUT:
+        title: 'Webhook request timeout (seconds)'
+        description: 'Maximum time to wait for a webhook response before failing the request'
+      MAXIMUM_FILE_UPLOAD_SIZE:
+        title: 'Attachment size limit (MB)'
+        description: 'Maximum attachment size in MB allowed for uploads'
+      WIDGET_TOKEN_EXPIRY:
+        title: 'Widget Token Expiry'
+        description: 'Token expiry in days'
+      FB_APP_ID:
+        title: 'Facebook App ID'
+      FB_VERIFY_TOKEN:
+        title: 'Facebook Verify Token'
+        description: 'The verify token used for Facebook Messenger Webhook'
+      FB_APP_SECRET:
+        title: 'Facebook App Secret'
+      IG_VERIFY_TOKEN:
+        title: 'Instagram Verify Token'
+        description: 'The verify token used for Instagram Webhook'
+      FACEBOOK_API_VERSION:
+        title: 'Facebook API Version'
+        description: 'Configure this if you want to use a different Facebook API version. Make sure it is prefixed with `v`'
+      ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT:
+        title: 'Enable human agent'
+        description: 'Enable human agent for Messenger channel for a longer message back period. Needs additional app approval.'
+      SHOPIFY_CLIENT_ID:
+        title: 'Shopify Client ID'
+        description: 'The Client ID (API Key) from your Shopify Partner account'
+      SHOPIFY_CLIENT_SECRET:
+        title: 'Shopify Client Secret'
+        description: 'The Client Secret (API Secret Key) from your Shopify Partner account'
+      AZURE_APP_ID:
+        title: 'Azure App ID'
+        description: 'The App ID used to authenticate with customer Microsoft accounts'
+      AZURE_APP_SECRET:
+        title: 'Azure App Secret'
+      MAILER_INBOUND_EMAIL_DOMAIN:
+        title: 'Inbound Email Domain'
+        description: 'The domain name used for generating conversation continuity emails (reply+id@domain.com)'
+      ACCOUNT_EMAILS_LIMIT:
+        title: 'Account Email Sending Limit (Daily)'
+        description: 'Maximum number of non-channel emails an account can send per day'
+      ACCOUNT_EMAILS_PLAN_LIMITS:
+        title: 'Account Email Plan Limits (Daily)'
+        description: 'Per-plan daily email sending limits as JSON'
+      LINEAR_CLIENT_ID:
+        title: 'Linear Client ID'
+        description: 'Linear client ID'
+      LINEAR_CLIENT_SECRET:
+        title: 'Linear Client Secret'
+        description: 'Linear client secret'
+      SLACK_CLIENT_ID:
+        title: 'Slack Client ID'
+        description: 'Slack client ID'
+      SLACK_CLIENT_SECRET:
+        title: 'Slack Client Secret'
+        description: 'Slack client secret'
+      INSTAGRAM_APP_ID:
+        title: 'Instagram App ID'
+      INSTAGRAM_APP_SECRET:
+        title: 'Instagram App Secret'
+        description: 'The App Secret used for Instagram authentication'
+      INSTAGRAM_VERIFY_TOKEN:
+        title: 'Instagram Verify Token'
+        description: 'The verify token used for Instagram Webhook'
+      INSTAGRAM_API_VERSION:
+        title: 'Instagram API Version'
+        description: 'Configure this if you want to use a different Instagram API version. Make sure it is prefixed with `v`'
+      ENABLE_INSTAGRAM_CHANNEL_HUMAN_AGENT:
+        title: 'Enable human agent for Instagram channel'
+        description: 'Enable human agent for Instagram channel for a longer message back period. Needs additional app approval.'
+      TIKTOK_APP_ID:
+        title: 'TikTok App ID'
+      TIKTOK_APP_SECRET:
+        title: 'TikTok App Secret'
+      TIKTOK_API_VERSION:
+        title: 'TikTok API Version'
+        description: 'Configure this if you want to use a different TikTok API version. Make sure it is prefixed with `v`'
+      WHATSAPP_APP_ID:
+        title: 'WhatsApp App ID'
+        description: 'The Facebook App ID for WhatsApp Business API integration'
+      WHATSAPP_CONFIGURATION_ID:
+        title: 'WhatsApp Configuration ID'
+        description: 'The Configuration ID for WhatsApp Embedded Signup flow (required for embedded signup)'
+      WHATSAPP_APP_SECRET:
+        title: 'WhatsApp App Secret'
+        description: 'The App Secret for WhatsApp Embedded Signup flow (required for embedded signup)'
+      WHATSAPP_API_VERSION:
+        title: 'WhatsApp API Version'
+        description: 'Configure this if you want to use a different WhatsApp API version. Make sure it is prefixed with `v`'
+      NOTION_CLIENT_ID:
+        title: 'Notion Client ID'
+        description: 'Notion client ID'
+      NOTION_CLIENT_SECRET:
+        title: 'Notion Client Secret'
+        description: 'Notion client secret'
+      GOOGLE_OAUTH_CLIENT_ID:
+        title: 'Google OAuth Client ID'
+        description: 'Google OAuth Client ID for email authentication'
+      GOOGLE_OAUTH_CLIENT_SECRET:
+        title: 'Google OAuth Client Secret'
+        description: 'Google OAuth Client Secret for email authentication'
+      GOOGLE_OAUTH_REDIRECT_URI:
+        title: 'Google OAuth Redirect URI'
+        description: 'The redirect URI configured in your Google OAuth app'
+      ENABLE_GOOGLE_OAUTH_LOGIN:
+        title: 'Enable Google OAuth login'
+        description: 'Show Google OAuth as a login option when credentials are configured'
+      CAPTAIN_OPEN_AI_API_KEY:
+        title: 'OpenAI API Key'
+        description: 'The API key used to authenticate requests to OpenAI services for Captain AI.'
+      CAPTAIN_OPEN_AI_MODEL:
+        title: 'OpenAI Model'
+        description: 'The OpenAI model configured for use in Captain AI. Default: gpt-4.1-mini'
+      CAPTAIN_OPEN_AI_ENDPOINT:
+        title: 'OpenAI API Endpoint (optional)'
+        description: 'The OpenAI endpoint configured for use in Captain AI. Default: https://api.openai.com/'
+      CAPTAIN_EMBEDDING_MODEL:
+        title: 'Embedding Model (optional)'
+        description: 'The embedding model configured for use in Captain AI. Default: text-embedding-3-small'
+      CAPTAIN_FIRECRAWL_API_KEY:
+        title: 'FireCrawl API Key (optional)'
+        description: 'The FireCrawl API key for the Captain AI service'
+      CHATWOOT_SUPPORT_WEBSITE_TOKEN:
+        title: 'Support Website Token'
+        description: 'Website token of the support inbox. Used for "Contact support" in the dashboard. Create a Website channel under your support account and paste its token here.'
+      CHATWOOT_SUPPORT_SCRIPT_URL:
+        title: 'Support Script Base URL'
+        description: 'Base URL that serves /packs/js/sdk.js for the support widget. Leave blank to use this installation FRONTEND_URL (recommended for same-system support).'
+      CHATWOOT_SUPPORT_IDENTIFIER_HASH:
+        title: 'Support Identifier Hash'
+        description: 'Optional HMAC identifier hash for the support widget. Leave blank if the support inbox does not require identity validation.'
+      SUPPORT_CONTACT_URL:
+        title: 'Support Contact URL (fallback)'
+        description: 'Fallback link when the support widget is not configured (mailto:, https://, or an in-app path). Opened when users click Contact support.'
+      CHATWOOT_INBOX_TOKEN:
+        title: 'Inbox Token'
+        description: 'Inbox token for Contact Support'
+      LOGO_THUMBNAIL:
+        title: 'Logo Thumbnail'
+        description: 'The thumbnail that would be used for favicon (512px X 512px)'
+      LOGO:
+        title: 'Logo'
+        description: 'The logo that would be used on the dashboard, login page etc.'
+      LOGO_DARK:
+        title: 'Logo Dark Mode'
+        description: 'The logo that would be used on the dashboard, login page etc. for dark mode'
+      BRAND_NAME:
+        title: 'Brand Name'
+        description: 'The name that would be used in emails and the widget'
+      INSTALLATION_NAME:
+        title: 'Installation Name'
+        description: 'The installation wide name that would be used in the dashboard, title etc.'
+      BRAND_URL:
+        title: 'Brand URL'
+        description: 'The URL that would be used in emails under the section “Powered By”'
+      WIDGET_BRAND_URL:
+        title: 'Widget Brand URL'
+        description: 'The URL that would be used in the widget under the section “Powered By”'
+      TERMS_URL:
+        title: 'Terms URL'
+        description: 'The terms of service URL displayed on the Signup Page'
+      PRIVACY_URL:
+        title: 'Privacy URL'
+        description: 'The privacy policy URL displayed in the app'
+      DISPLAY_MANIFEST:
+        title: 'Platform Metadata'
+        description: 'Display default platform metadata like favicons and upgrade warnings'
+      ENABLE_SAML_SSO_LOGIN:
+        title: 'Enable SAML SSO login'
+        description: 'Show SAML SSO as a login option. Cannot be disabled if any users are using SAML authentication.'
+      CHATWOOT_INBOX_HMAC_KEY:
+        title: 'Inbox HMAC Key'
+        description: 'The Inbox HMAC Key for Contact Support'
+      CLOUD_ANALYTICS_TOKEN:
+        title: 'Analytics Token'
+        description: 'The Amplitude analytics API key'
+      CLEARBIT_API_KEY:
+        title: 'Clearbit API Key'
+        description: 'This API key is used for onboarding users, to pre-fill account data.'
+      CONTEXT_DEV_API_KEY:
+        title: 'Context.dev API Key'
+        description: 'API key for Context.dev branding service used during account onboarding'
+      DASHBOARD_SCRIPTS:
+        title: 'Dashboard Scripts'
+        description: 'Scripts are loaded as the last item in the <body> tag'
+      INACTIVE_WHATSAPP_NUMBERS:
+        title: 'Inactive WhatsApp Numbers'
+        description: 'Comma-separated list of WhatsApp numbers that should be rejected with a 422 error'
+      SKIP_INCOMING_BCC_PROCESSING:
+        title: 'Skip BCC Processing For'
+        description: 'Comma-separated list of account IDs that should be skipped from incoming BCC processing'
+      CAPTAIN_CLOUD_PLAN_LIMITS:
+        title: 'Captain Cloud Plan Limits'
+        description: 'The limits for the Captain AI service for different plans'
+      MARKETING_CONVERSION_TRACKING_CONFIG:
+        title: 'Marketing Conversion Tracking Config'
+        description: 'JSON config for signup and plan activation conversion tracking'
+      ACCOUNT_SECURITY_NOTIFICATION_WEBHOOK_URL:
+        title: 'Webhook URL to post security analysis'
+        description: 'Used to notify about account abuses and potential threats'
+      CHATWOOT_INSTANCE_ADMIN_EMAIL:
+        title: 'Instance Admin Email'
+        description: 'The email of the instance administrator to receive compliance-related notifications'
+      OG_IMAGE_CDN_URL:
+        title: 'OG Image CDN URL'
+        description: 'The CDN URL for serving OG images'
+      OG_IMAGE_CLIENT_REF:
+        title: 'OG Image Client Reference'
+        description: 'Token used to block unauthorized access to OG images'
+      CLOUDFLARE_API_KEY:
+        title: 'Cloudflare API Key'
+        description: 'API key for Cloudflare account authentication'
+      CLOUDFLARE_ZONE_ID:
+        title: 'Cloudflare Zone ID'
+        description: 'Zone ID for the Cloudflare domain'
+      BLOCKED_EMAIL_DOMAINS:
+        title: 'Blocked Email Domains'
+        description: 'Add a domain per line to block them from signing up; accepts Regex'
+      OTEL_PROVIDER:
+        title: 'OpenTelemetry Provider'
+        description: 'LLM observability provider (langfuse, langsmith, etc.)'
+      LANGFUSE_PUBLIC_KEY:
+        title: 'Langfuse Public Key'
+        description: 'Public key for Langfuse authentication'
+      LANGFUSE_SECRET_KEY:
+        title: 'Langfuse Secret Key'
+        description: 'Secret key for Langfuse authentication'
+      LANGFUSE_BASE_URL:
+        title: 'Langfuse Base URL'
+        description: 'Langfuse endpoint (US: https://us.cloud.langfuse.com, EU: https://cloud.langfuse.com)'
+    instance_status:
+      title: 'Instance Status'
+      metric: 'Metric'
+      value: 'Value'
+    features:
+      saml:
+        name: 'SAML SSO'
+        description: 'Configuration for controlling SAML Single Sign-On availability'
+      custom_branding:
+        name: 'Custom Branding'
+        description: 'Apply your own branding to this installation.'
+      agent_capacity:
+        name: 'Agent Capacity'
+        description: 'Set limits to auto-assigning conversations to your agents.'
+      audit_logs:
+        name: 'Audit Logs'
+        description: 'Track and trace account activities with ease with detailed audit logs.'
+      disable_branding:
+        name: 'Disable Branding'
+        description: 'Disable branding on live-chat widget and external emails.'
+      voice_calls:
+        name: 'Voice Calls'
+        description: 'Enable voice calling capabilities for your agents and customers.'
+      support:
+        name: 'Contact Support'
+        description: 'Configure the support widget / link shown when users click Contact support (same-system inbox recommended).'
+      help_center:
+        name: 'Help Center'
+        description: 'Allow agents to create help center articles and publish them in a portal.'
+      captain:
+        name: 'Captain'
+        description: 'Enable AI-powered conversations with your customers.'
+      live_chat:
+        name: 'Live Chat'
+        description: 'Improve your customer experience using a live chat on your website.'
+      email:
+        name: 'Email'
+        description: 'Manage your email customer interactions from Chatwoot.'
+      sms:
+        name: 'SMS'
+        description: 'Manage your SMS customer interactions from Chatwoot.'
+      messenger:
+        name: 'Messenger'
+        description: 'Stay connected with your customers on Facebook & Instagram.'
+      instagram:
+        name: 'Instagram'
+        description: 'Stay connected with your customers on Instagram'
+      tiktok:
+        name: 'TikTok'
+        description: 'Stay connected with your customers on TikTok'
+      whatsapp:
+        name: 'WhatsApp'
+        description: 'Manage your WhatsApp business interactions from Chatwoot.'
+      telegram:
+        name: 'Telegram'
+        description: 'Manage your Telegram customer interactions from Chatwoot.'
+      line:
+        name: 'Line'
+        description: 'Manage your Line customer interactions from Chatwoot.'
+      google:
+        name: 'Google'
+        description: 'Configuration for setting up Google OAuth Integration'
+      microsoft:
+        name: 'Microsoft'
+        description: 'Configuration for setting up Microsoft Email'
+      linear:
+        name: 'Linear'
+        description: 'Configuration for setting up Linear Integration'
+      notion:
+        name: 'Notion'
+        description: 'Configuration for setting up Notion Integration'
+      slack:
+        name: 'Slack'
+        description: 'Configuration for setting up Slack Integration'
+      whatsapp_embedded:
+        name: 'WhatsApp Embedded'
+        description: 'Configuration for setting up WhatsApp Embedded Integration'
+      shopify:
+        name: 'Shopify'
+        description: 'Configuration for setting up Shopify Integration'
     account_suspension:
       categories:
         spam: 'Spam'
@@ -649,8 +1037,310 @@ en:
         help_center_query_translation: 'Help center query translation'
         audio_transcription: 'Audio transcription'
         help_center_search: 'Help center search'
+    account_statuses:
+      active: 'Active'
+      suspended: 'Suspended'
+    filters:
+      filter_by: 'Filter by'
+      all_records: 'All records'
+      clear: 'Clear filter'
+      common:
+        active: 'Active'
+        suspended: 'Suspended'
+        recent: 'Recent'
+        confirmed: 'Confirmed'
+        unconfirmed: 'Unconfirmed'
+        super_admin: 'Super Admin'
+        marked_for_deletion: 'Marked for deletion'
+        user: 'User'
+        agent_bot: 'Agent Bot'
+        platform_app: 'Platform App'
+    accounts:
+      seed:
+        description: 'Click the button to generate seed data into this account for demos.'
+        warning: 'Note: This will clear all the existing data in this account.'
+        submit: 'Generate Seed Data'
+      reset_cache:
+        description_html: 'This will clear the IndexedDB cache keys from redis.<br>The next load will fetch the data from backend.'
+        submit: 'Reset Frontend Cache'
+    users:
+      mfa:
+        label: 'MFA'
+        enabled: 'Enabled'
+        disabled: 'Disabled'
+      impersonate:
+        caution: 'Caution: Any actions executed after impersonate will appear as if performed by the impersonated user - [%{name}]'
+        submit: 'Impersonate user'
     push_diagnostics:
+      title: 'Push Diagnostics'
+      intro: "Send a test push notification to a specific user's registered devices to diagnose delivery issues. Results show the raw FCM / Web Push / relay response so you can see exactly what failed."
+      lookup_heading: '1. Look up user'
+      lookup_placeholder: 'user@example.com or numeric user ID'
+      lookup_submit: 'Look up'
       user_not_found: 'User not found.'
+      user_not_found_query: 'No user found for "%{query}".'
+      accounts: 'Accounts'
+      select_heading: '2. Select subscriptions (%{count})'
+      warning: '⚠️ This sends a real push to every selected device. Use only when diagnosing a reported issue.'
+      no_subscriptions: 'This user has no push subscriptions registered.'
+      push_title: 'Title'
+      push_body: 'Body'
+      push_hint: 'Customers will see this text as a real push notification on their device.'
+      send_test: 'Send Test Push to Selected'
+      delete_selected: 'Delete Selected Subscriptions'
+      delete_confirm: "Delete the selected subscription(s)? The user won't receive pushes on those devices until their app re-registers."
+      results_heading: '3. Results'
+      time_ago: '%{time} ago'
       no_subscriptions_to_test: 'Select at least one subscription to test.'
       no_subscriptions_to_delete: 'Select at least one subscription to delete.'
       subscriptions_deleted: "Deleted %{count} subscription(s). The user's device(s) will re-register on next app launch."
+      columns:
+        id: 'ID'
+        type: 'Type'
+        device: 'Device / endpoint'
+        device_short: 'Device'
+        push_token: 'Push token'
+        device_details: 'Device details'
+        created: 'Created'
+        updated: 'Last updated'
+        sub_id: 'Sub ID'
+        status: 'Status'
+        details: 'Details'
+      status:
+        success: 'success'
+        failure: 'failure'
+        skipped: 'skipped'
+  activerecord:
+    models:
+      account:
+        one: Account
+        other: Accounts
+      user:
+        one: User
+        other: Users
+      agent_bot:
+        one: Agent Bot
+        other: Agent Bots
+      platform_app:
+        one: Platform App
+        other: Platform Apps
+      platform_banner:
+        one: Platform Banner
+        other: Platform Banners
+      installation_config:
+        one: Installation Config
+        other: Installation Configs
+      access_token:
+        one: Access Token
+        other: Access Tokens
+      account_user:
+        one: Account User
+        other: Account Users
+      super_admin:
+        one: Super Admin
+        other: Super Admins
+    attributes:
+      account:
+        id: ID
+        name: Name
+        locale: Locale
+        status: Status
+        users: Users
+        conversations: Conversations
+        suspension_history: Suspension history
+        account_users: Account users
+        custom_attributes: Custom attributes
+        limits: Limits
+        manually_managed_features: Manually managed features
+        all_features: Features
+        captain_models: Captain models
+        created_at: Created at
+        updated_at: Updated at
+      user:
+        id: ID
+        avatar: Avatar
+        avatar_url: Avatar
+        name: Name
+        display_name: Display name
+        email: Email
+        password: Password
+        type: Type
+        accounts: Accounts
+        account_users: Account users
+        access_token: Access Token
+        provider: Provider
+        uid: UID
+        sign_in_count: Sign in count
+        current_sign_in_at: Current sign in at
+        last_sign_in_at: Last sign in at
+        current_sign_in_ip: Current sign in IP
+        last_sign_in_ip: Last sign in IP
+        confirmation_token: Confirmation token
+        confirmed_at: Confirmed at
+        confirmation_sent_at: Confirmation sent at
+        unconfirmed_email: Unconfirmed email
+        tokens: Tokens
+        pubsub_token: Pubsub token
+        created_at: Created at
+        updated_at: Updated at
+      agent_bot:
+        id: ID
+        avatar: Avatar
+        avatar_url: Avatar
+        account: Account
+        name: Name
+        description: Description
+        outgoing_url: Outgoing URL
+        access_token: Access Token
+        created_at: Created at
+        updated_at: Updated at
+      platform_app:
+        id: ID
+        name: Name
+        access_token: Access Token
+        created_at: Created at
+        updated_at: Updated at
+      platform_banner:
+        id: ID
+        banner_message: Banner message
+        banner_type: Banner type
+        active: Active
+        created_at: Created at
+        updated_at: Updated at
+      account_user:
+        id: ID
+        account: Account
+        user: User
+        inviter: Inviter
+        role: Role
+        created_at: Created at
+        updated_at: Updated at
+      access_token:
+        id: ID
+        owner: Owner
+        token: Token
+        created_at: Created at
+        updated_at: Updated at
+      installation_config:
+        id: ID
+        name: Name
+        value: Value
+        created_at: Created at
+        updated_at: Updated at
+  helpers:
+    label:
+      account:
+        id: ID
+        name: Name
+        locale: Locale
+        status: Status
+        users: Users
+        conversations: Conversations
+        suspension_history: Suspension history
+        account_users: Account users
+        custom_attributes: Custom attributes
+        limits: Limits
+        manually_managed_features: Manually managed features
+        all_features: Features
+        captain_models: Captain models
+        created_at: Created at
+        updated_at: Updated at
+      user:
+        id: ID
+        avatar: Avatar
+        avatar_url: Avatar
+        name: Name
+        display_name: Display name
+        email: Email
+        password: Password
+        type: Type
+        accounts: Accounts
+        account_users: Account users
+        access_token: Access Token
+        provider: Provider
+        uid: UID
+        sign_in_count: Sign in count
+        current_sign_in_at: Current sign in at
+        last_sign_in_at: Last sign in at
+        current_sign_in_ip: Current sign in IP
+        last_sign_in_ip: Last sign in IP
+        confirmation_token: Confirmation token
+        confirmed_at: Confirmed at
+        confirmation_sent_at: Confirmation sent at
+        unconfirmed_email: Unconfirmed email
+        tokens: Tokens
+        pubsub_token: Pubsub token
+        created_at: Created at
+        updated_at: Updated at
+      agent_bot:
+        id: ID
+        avatar: Avatar
+        avatar_url: Avatar
+        account: Account
+        name: Name
+        description: Description
+        outgoing_url: Outgoing URL
+        access_token: Access Token
+        created_at: Created at
+        updated_at: Updated at
+      platform_app:
+        id: ID
+        name: Name
+        access_token: Access Token
+        created_at: Created at
+        updated_at: Updated at
+      platform_banner:
+        id: ID
+        banner_message: Banner message
+        banner_type: Banner type
+        active: Active
+        created_at: Created at
+        updated_at: Updated at
+      account_user:
+        id: ID
+        account: Account
+        user: User
+        inviter: Inviter
+        role: Role
+        created_at: Created at
+        updated_at: Updated at
+      access_token:
+        id: ID
+        owner: Owner
+        token: Token
+        created_at: Created at
+        updated_at: Updated at
+      installation_config:
+        id: ID
+        name: Name
+        value: Value
+        created_at: Created at
+        updated_at: Updated at
+  administrate:
+    actions:
+      confirm: 'Are you sure?'
+      destroy: Destroy
+      edit: Edit
+      edit_resource: Edit %{name}
+      show_resource: Show %{name}
+      new_resource: New %{name}
+      back: Back
+    controller:
+      create:
+        success: '%{resource} was successfully created.'
+      destroy:
+        success: '%{resource} was successfully destroyed.'
+      update:
+        success: '%{resource} was successfully updated.'
+    fields:
+      has_many:
+        more: Showing %{count} of %{total_count}
+        none: None
+    form:
+      error: Error
+      errors: '%{pluralized_errors} prohibited this %{resource_name} from being saved:'
+    navigation:
+      back_to_app: Back to app
+    search:
+      clear: Clear search
+      label: Search %{resource}
