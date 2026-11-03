@@ -1,0 +1,76 @@
+# Jingqi NewAPI — 1Panel 兼容 compose（PostgreSQL）
+# 推荐目录：/opt/1panel/apps/new-api
+# 通过同目录 .env 注入密码与端口，勿提交真实密钥。
+#
+# 首次：
+#   cp .env.example .env   # 改密码
+#   docker compose pull && docker compose up -d
+#
+# 更新镜像：
+#   ./update.sh
+# 或：
+#   docker compose pull && docker compose up -d
+
+name: new-api
+
+services:
+  new-api:
+    image: ${NEW_API_IMAGE:-calciumion/new-api}:${NEW_API_IMAGE_TAG:-latest}
+    container_name: new-api
+    restart: always
+    command: --log-dir /app/logs
+    ports:
+      - '${HOST_PORT:-3000}:3000'
+    volumes:
+      - ./data:/data
+      - ./logs:/app/logs
+    environment:
+      TZ: Asia/Shanghai
+      SQL_DSN: postgresql://${POSTGRES_USER:-newapi}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-new-api}
+      REDIS_CONN_STRING: redis://:${REDIS_PASSWORD}@redis:6379
+      SESSION_SECRET: ${SESSION_SECRET:?set SESSION_SECRET}
+      ERROR_LOG_ENABLED: ${ERROR_LOG_ENABLED:-true}
+      BATCH_UPDATE_ENABLED: ${BATCH_UPDATE_ENABLED:-true}
+      MEMORY_CACHE_ENABLED: ${MEMORY_CACHE_ENABLED:-true}
+      NODE_NAME: ${NODE_NAME:-new-api-node-1}
+      DEFAULT_LANGUAGE: ${DEFAULT_LANGUAGE:-zh-CN}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O - http://localhost:3000/api/status | grep -q success || exit 1']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:15
+    container_name: new-api-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-newapi}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-new-api}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:alpine
+    container_name: new-api-redis
+    restart: always
+    command: ['sh', '-c', 'redis-server --requirepass "$$REDIS_PASSWORD"']
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?set REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+
+volumes:
+  pg_data:
+  redis_data:
